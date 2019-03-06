@@ -1,0 +1,57 @@
+### Intuit Twitter App configuration properties file
+
+#spring.h2.console.enabled: true
+
+
+logging.level.org.hibernate.SQL: debug
+
+spring.jmx:
+   enabled: false
+
+spring.datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:bootexample
+
+server:
+  port: 8080
+
+###
+#   H2 Settings
+###
+  spring.h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+
+#management endpoints on a separate port
+management:
+  port: 8081
+  security:
+    enabled: false# management port is internal only. no need to secure it.
+
+#default project info followed by actual injected pom-specified values.
+project:
+  name: craftDemo
+  version: 0.1
+  description:  twitter like app default description
+info:
+  build:
+    artifact: ${project.artifactId}
+    name: ${project.name}
+    description: ${project.description}
+    version: ${project.version}
+
+craft.service:
+  name: 'default profile:'
+---
+spring:
+  profiles: test
+
+spring.jpa:
+    hibernate.ddl-auto: create-drop
+
+craft.service:
+  name: 'test profile:'
