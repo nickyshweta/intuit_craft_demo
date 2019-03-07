@@ -16,9 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.intuit.craft.beans.Tweet;
-import com.intuit.craft.controllers.UserController;
 import com.intuit.craft.jpa.TweetRepository;
-import com.intuit.craft.jpa.UserRepository;
 
 /**
  * @author nicky
@@ -29,25 +27,23 @@ public class TweetServiceImpl implements TweetService {
 
 	private static final Logger LOGGER = getLogger(TweetServiceImpl.class);
 	
-	private HashMap<String,Long> LoggedInUserId=new HashMap<String,Long>();
 	@Autowired
 	TweetRepository tweetRepository;
 	
 	@Autowired
 	FollowerService followerService;
 	
-	@Autowired
-	UserRepository userRepository;
 	
 	
-	private Long getUserId(){
+	
+	public Long getUserId(){
 		final SecurityContext securityContext = SecurityContextHolder.getContext();
 		final Authentication authentication = securityContext.getAuthentication();
 		if(authentication!=null){
 			LOGGER.info("Logged In user: "+authentication.getName());
 			return getUserIdHelper(authentication.getName());
 		}else
-			return (long) 0;
+			return (long) 1;//default userId for local
 	}
 	
 	@Override
@@ -56,7 +52,6 @@ public class TweetServiceImpl implements TweetService {
 		return tweetRepository.save(tweet);
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public ArrayList<Tweet> getLatestTweets() {
 		// TODO Auto-generated method stub
@@ -65,15 +60,14 @@ public class TweetServiceImpl implements TweetService {
 				ArrayList<Tweet> latestTweets = new ArrayList<>();
 				ArrayList<Long> listOfFollowing = new ArrayList<>();
 				listOfFollowing=followerService.getListOfFollowingUsers(userId);
-				if(listOfFollowing==null){
-					listOfFollowing.add(userId);
-				}
 				
+				listOfFollowing.add(userId); //Adding User himself for timeline feed
 				LOGGER.info("list of following userids"+listOfFollowing.toString());
 				latestTweets = tweetRepository.findByUserIdInOrderByPublishDateDesc(listOfFollowing);
 				return latestTweets;
 	}
 	
+	//This method can be used to get the userId from User 
 	private Long getUserIdHelper(String name){
 		HashMap<String,Long> userIds= new HashMap<String,Long>();
 		userIds.put("admin", 1L);

@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.intuit.craft.beans.Follower;
@@ -36,8 +37,9 @@ public class FollowerServiceImpl implements FollowerService {
 			return followerRepository.save(follower);
 		}
 		else{
-			return followerRepository.save(existing);
+			return null;
 		}
+		
 	}
 
 	@Override
@@ -45,7 +47,6 @@ public class FollowerServiceImpl implements FollowerService {
 		// TODO Auto-generated method stub
 		Follower existing = followerRepository.findByUserIdAndFollowerId(follower.getUserId(),follower.getFollowerId());
 		if(existing!=null){
-//			existing.setStatus(0);
 			 followerRepository.delete(existing);
 		}
 		
@@ -57,9 +58,7 @@ public class FollowerServiceImpl implements FollowerService {
 		LOGGER.info("userid" +userId);
 		ArrayList<Long> followingList =  followerRepository.findFollowerIdByUserId(userId);
 		
-		ArrayList<Follower> resultList =  new ArrayList<Follower>();
-		//followingList.forEach(resultList::add);
-		LOGGER.info("ResultSet"+resultList.size());
+		
 	//	ArrayList<Long> listOfFollowing =(ArrayList<Long>) StreamSupport.stream(followingList.spliterator(),false).
 							//				map(Follower -> Follower.getFollowerId()).collect(Collectors.toList());
 		

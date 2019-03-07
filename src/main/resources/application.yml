@@ -1,7 +1,5 @@
 ### Intuit Twitter App configuration properties file
 
-#spring.h2.console.enabled: true
-
 
 logging.level.org.hibernate.SQL: debug
 
@@ -21,7 +19,7 @@ server:
   spring.h2:
     console:
       enabled: true
-      path: /console
+      path: /h2-console
       settings:
         trace: false
         web-allow-others: false
