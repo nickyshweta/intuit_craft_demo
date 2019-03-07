@@ -50,10 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().httpBasic()
 		.and().csrf().disable()
 		.sessionManagement().disable();
-		//http.headers().frameOptions().disable();
-		
-
-		
+			
 	}
 	
 	@Autowired

@@ -1,7 +1,10 @@
 package com.intuit.craft.security;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.intuit.craft.services.AuthTokenGeneratorImpl;
+import com.intuit.craft.services.TweetServiceImpl;
 /**
  * @author nicky
  * Used for persisting generated tokens in local cache. Manager class for saving and verifying tokens.
@@ -20,6 +24,7 @@ import com.intuit.craft.services.AuthTokenGeneratorImpl;
 @Configuration
 public class AuthTokenManager{
 	
+	private static final Logger LOGGER = getLogger(AuthTokenManager.class);
 	private static final int CACHE_SIZE = 10000;
 	private static final long TOKEN_EXPIRATION_MINUTES = AuthTokenGeneratorImpl.TOKEN_EXPIRATION_MINUTES;
 	private Cache<String, Authentication> tokenCache;
@@ -62,6 +67,7 @@ public class AuthTokenManager{
 			authentication = tokenCache.getIfPresent(token);
 		}
 		if(authentication!=null){
+			LOGGER.info("Authentication:" +authentication.getDetails().toString());
 			setAuthentication(authentication);
 		}
 		return true;

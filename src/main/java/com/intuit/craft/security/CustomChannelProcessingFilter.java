@@ -1,6 +1,9 @@
 package com.intuit.craft.security;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 /**
@@ -32,7 +36,7 @@ public class CustomChannelProcessingFilter extends ChannelProcessingFilter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		
-		if(request.getServletPath().equals(WebSecurityConfig.AUTH_WHITELIST)){
+		if(request.getServletPath().equals(WebSecurityConfig.USER_LOGIN_PATH)){
 			chain.doFilter(req, res);
 			return;
 		}

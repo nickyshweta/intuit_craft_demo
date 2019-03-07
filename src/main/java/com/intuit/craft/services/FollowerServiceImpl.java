@@ -55,13 +55,7 @@ public class FollowerServiceImpl implements FollowerService {
 	@Override
 	public ArrayList<Long> getListOfFollowingUsers(Long userId) {
 		// TODO Auto-generated method stub
-		LOGGER.info("userid" +userId);
 		ArrayList<Long> followingList =  followerRepository.findFollowerIdByUserId(userId);
-		
-		
-	//	ArrayList<Long> listOfFollowing =(ArrayList<Long>) StreamSupport.stream(followingList.spliterator(),false).
-							//				map(Follower -> Follower.getFollowerId()).collect(Collectors.toList());
-		
 		LOGGER.info("listOfFollowing"+followingList.toString());
 		return followingList;
 	}
