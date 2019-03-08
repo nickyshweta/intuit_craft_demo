@@ -45,18 +45,20 @@ Initial Set up (Data set up)
 ---------------------------
 data.sql loads the Users, Tweets and Followers to DB on application start
 
+
+
 Post tweet
 ---------------------------
-curl --user admin:admin123 -X POST "http://localhost:8080/twitter/v1/tweet" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"content\": \"This is test message\", \"userId\": 5}"
+curl -H "Authorization:V2ViVG9rZW4gW3VzZXJOYW1lPWFkbWluLCBwYXNzd29yZD1hZG1pbjEyM10="  -X POST "http://localhost:8080/twitter/v1/tweet" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"content\": \"This is test message\", \"userId\": 5}"
 
 Get feed
 ---------------------------
-curl --user admin:admin123 -X GET "http://localhost:8080/twitter/v1/feed" -H "accept: application/json"
+curl -H "Authorization:V2ViVG9rZW4gW3VzZXJOYW1lPWFkbWluLCBwYXNzd29yZD1hZG1pbjEyM10="  -X GET "http://localhost:8080/twitter/v1/feed" -H "accept: application/json"
 
 Follow User
 ---------------------------
-curl --user admin:admin123 -X PUT "http://localhost:8080/twitter/v1/follow" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"followerId\": 5, \"userId\": 1}"
+curl -H "Authorization:V2ViVG9rZW4gW3VzZXJOYW1lPWFkbWluLCBwYXNzd29yZD1hZG1pbjEyM10="  -X PUT "http://localhost:8080/twitter/v1/follow" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"followerId\": 5, \"userId\": 1}"
 
 UnFollow User
 --------------------------
-curl --user admin:admin123 -X DELETE "http://localhost:8080/twitter/v1/unfollow" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"followerId\": 5, \"userId\": 1}"
+curl -H "Authorization:V2ViVG9rZW4gW3VzZXJOYW1lPWFkbWluLCBwYXNzd29yZD1hZG1pbjEyM10="  -X DELETE "http://localhost:8080/twitter/v1/unfollow" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"followerId\": 5, \"userId\": 1}"
