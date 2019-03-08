@@ -4,7 +4,7 @@ Problem Statement: Create a Twitter like application for Internal Employees
 
 Design
 ------------
-To be Updated
+Refer design doc
 
 
 Problem
@@ -45,7 +45,9 @@ Initial Set up (Data set up)
 ---------------------------
 data.sql loads the Users, Tweets and Followers to DB on application start
 
-
+User login (Generate Token)
+---------------------------
+curl --user admin:admin123 -X GET "http://localhost:8080/user/login
 
 Post tweet
 ---------------------------
